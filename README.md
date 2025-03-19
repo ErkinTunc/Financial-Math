@@ -44,8 +44,6 @@ python main.py
 
 ## Files
 
-## Files
-
 - **`lecture_donnees()`**: Reads investment data from the file.
 - **`optimiz_coef()`**: Computes the optimal coefficients for each time step.
 - **`main()`**: Controls the overall process flow and outputs the results.
