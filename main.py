@@ -3,7 +3,7 @@ from utils import lecture_donnees, optimiz_coef, reconstruct_path
 
 def main():
     # === Step 1: Load data from Excel ===
-    file_path = 'data-folder/Données_groupe_13.xlsx'
+    file_path = 'data-folder/data-exemple/exemple.xlsx' # data-folder/Données_groupe_13.xlsx
     n, tau0, placements = lecture_donnees(file_path)
 
     # === Step 2: Initialize coefficient and path arrays ===
