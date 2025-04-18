@@ -1,5 +1,5 @@
 import openpyxl
-from utils import lecture_donnees, optimiz_coef, reconstruct_path
+from utils import lecture_donnees, optimiz_coef, reconstruct_path, enumerate_paths
 
 def main():
     # === Step 1: Load data from Excel ===
@@ -20,6 +20,9 @@ def main():
 
     # === Step 4: Reconstruct the optimal investment path ===
     path = reconstruct_path(chemin, n)
+
+    # ==== Step 4.1: Display all paths === (facultatif)
+    # enumerate_paths(n, tau0, placements)
 
     # === Step 5: Display results ===
     print("\nOptimal capital coefficients:")

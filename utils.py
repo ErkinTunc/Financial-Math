@@ -95,13 +95,38 @@ def reconstruct_path(chemin, end):
 
 
 
+# This function is not critical for the main purpose
+def enumerate_paths(n, tau0, placements):
+    from collections import defaultdict
+
+    # Create graph: each node maps to list of (next_node, rate)
+    graph = defaultdict(list)
+    
+    # Add base arcs (t, t+1) with rate 1 + tau0
+    for t in range(n):
+        graph[t].append((t+1, 1 + tau0))
+
+    # Add placement arcs (dk, fk) with rate 1 + tauk
+    for tauk, dk, fk in placements:
+        graph[dk].append((fk, 1 + tauk))
+
+    all_paths = []
+
+    def backtrack(current, path, coef):
+        if current == n:
+            all_paths.append((path[:], coef))
+            return
+
+        for next_node, rate in graph[current]:
+            if next_node <= n:
+                path.append((current, next_node))
+                backtrack(next_node, path, coef * rate)
+                path.pop()
+
+    backtrack(0, [], 1.0)
+
+    # Print all paths
+    for i, (path, coef) in enumerate(all_paths, 1):
+        print(f"Path {i}: {path} -> Total Coefficient: {coef:.6f}")
 
 
-if __name__ == "__main__":
-    n, tau0, placements = lecture_donnees('data-folder/data-exemple/exemple.xlsx')
-
-    print("Investment horizon (n):", n)
-    print("Base interest rate (tau0):", tau0)
-    print("Available investments:")
-    for i, (tau, dk, fk) in enumerate(placements, 1):
-        print(f"  {i}. Rate: {tau:.4f}, Start: {dk}, End: {fk}")
