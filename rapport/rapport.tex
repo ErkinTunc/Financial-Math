@@ -201,6 +201,13 @@
         \end{tabular}
     \end{center}
 
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.85\textwidth]{images/table.png}
+        \caption{Table d'orienté $D$ représentant les arcs $(t, t+1)$ et $(d_k, f_k)$ pour l'exemple avec $n = 7$.}
+        \label{fig:table_exemple}
+    \end{figure}
+
     \subsection{Construction du graphe}
 
     On construit un graphe orienté $D = (V, A)$ tel que :
@@ -218,27 +225,63 @@
 
     \begin{figure}[h!]
         \centering
-        \includegraphics[width=0.85\textwidth]{images/graph_concret_exemple.png}
+        \includegraphics[width=1\textwidth]{images/graph_concret_exemple.png}
         \caption{Graphe orienté $D$ représentant les arcs $(t, t+1)$ et $(d_k, f_k)$ pour l'exemple avec $n = 7$.}
         \label{fig:graphe_exemple}
     \end{figure}
+    \newpage
+    \subsubsection{Énumération des chemins de P(0, 7).}
+    Voici une liste des chemins possibles pour aller de la date 0 à la date 7, en ayant utilisé les arcs disponibles, y compris ceux par défaut ("t->t+1") :
 
-    \subsection{Évaluation de quelques chemins}
 
-    Voici quelques chemins possibles de 0 à 7, et leur coefficient multiplicatif :
+\begin{itemize}
+    \item Chemin 1 : $(0,1) \to (1,2) \to (2,3) \to (3,4) \to (4,5) \to (5,6) \to (6,7)$ \\
+    \hspace{0.5cm} $\Rightarrow C_1 \approx 1.0647$
+    \vspace{0.3cm}
 
-    \begin{itemize}
-        \item Chemin 1 : $(0,1) \to (1,2) \to (2,5) \to (5,6) \to (6,7)$ \\
-        \hspace{0.5cm} $\Rightarrow C_1 \approx 1.0676 $
-        \item Chemin 2 : $(0,1) \to (1,3) \to (3,4) \to (4,7)$ \\
-        \hspace{0.5cm} $\Rightarrow C2 \approx 1.0675$ 
-        \item Chemin 3 : $(0,2) \to (2,5) \to (5,6) \to (6,7)$ \\
-        \hspace{0.5cm} $\Rightarrow C_3 = 1.019 \cdot 1.03 \cdot (1.009)^2 \approx 1.0685$
-        \item chemin 4 : $(0,2) \to (2,3) \to (3,6) \to (6,7)$ \\
-        \hspace{0.5cm} $\Rightarrow C4 \approx 1.0685$
+    \item Chemin 2 : $(0,1) \to (1,2) \to (2,3) \to (3,4) \to (4,7)$ \\
+    \hspace{0.5cm} $\Rightarrow C_2 \approx 1.0655$
+    \vspace{0.3cm}
 
-        chemin (optimal) : $(0,1) \to (1,3) \to (3,6) \to (6,7)$ $ avec$ $ C \approx 1,0696$\\
-    \end{itemize}
+    \item Chemin 3 : $(0,1) \to (1,2) \to (2,3) \to (3,6) \to (6,7)$ \\
+    \hspace{0.5cm} $\Rightarrow C_3 \approx 1.0676$
+    \vspace{0.3cm}
+
+    \item Chemin 4 : $(0,1) \to (1,2) \to (2,5) \to (5,6) \to (6,7)$ \\
+    \hspace{0.5cm} $\Rightarrow C_4 \approx 1.0676$
+    \vspace{0.3cm}
+
+    \item Chemin 5 : $(0,1) \to (1,3) \to (3,4) \to (4,5) \to (5,6) \to (6,7)$ \\
+    \hspace{0.5cm} $\Rightarrow C_5 \approx 1.0667$
+    \vspace{0.3cm}
+
+    \item Chemin 6 : $(0,1) \to (1,3) \to (3,4) \to (4,7)$ \\
+    \hspace{0.5cm} $\Rightarrow C_6 \approx 1.0675$
+    \vspace{0.3cm}
+
+    \item Chemin 7 : $(0,1) \to (1,3) \to (3,6) \to (6,7)$ \\
+    \hspace{0.5cm} $\Rightarrow \tmathbf{C_7 \approx 1.0696}$ \textbf{(chemin optimal)}
+    \vspace{0.3cm}
+
+    \item Chemin 8 : $(0,2) \to (2,3) \to (3,4) \to (4,5) \to (5,6) \to (6,7)$ \\
+    \hspace{0.5cm} $\Rightarrow C_8 \approx 1.0657$
+    \vspace{0.3cm}
+
+    \item Chemin 9 : $(0,2) \to (2,3) \to (3,4) \to (4,7)$ \\
+    \hspace{0.5cm} $\Rightarrow C_9 \approx 1.0665$
+    \vspace{0.3cm}
+
+    \item Chemin 10 : $(0,2) \to (2,3) \to (3,6) \to (6,7)$ \\
+    \hspace{0.5cm} $\Rightarrow C_{10} \approx 1.0685$
+    \vspace{0.3cm}
+
+    \item Chemin 11 : $(0,2) \to (2,5) \to (5,6) \to (6,7)$ \\
+    \hspace{0.5cm} $\Rightarrow C_{11} \approx 1.0685$
+    \vspace{0.3cm}
+\end{itemize}
+
+Pour trouver ces routes L'algorithmique de \textit{enumerate\_paths} qui situe en \texttt{outils.py} est utilisé.
+
 
     \subsection{Cardinalité des chemins pour $n = 7$}
     Dans cet exemple, nous avons $n = 7$. Si l'on supposait que le graphe contient tous les arcs possibles $(t', t)$ avec $0 \leq t' < t \leq 7$, alors selon la formule théorique vue précédemment, le nombre total de chemins distincts de $0$ à $7$ serait :
