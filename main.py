@@ -21,10 +21,10 @@ def main():
     # === Step 4: Reconstruct the optimal investment path ===
     path = reconstruct_path(chemin, n)
 
-    # ==== Step 4.1: Display all paths === (facultatif)
+    # ==== Step 5: Display all paths === (facultatif)
     # enumerate_paths(n, tau0, placements)
 
-    # === Step 5: Display results ===
+    # === Step 6: Display optimal path ===
     print("\nOptimal capital coefficients:")
     for t in range(n + 1):
         print(f"Coef({t}) = {coef[t]:.5f}")

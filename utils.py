@@ -95,38 +95,48 @@ def reconstruct_path(chemin, end):
 
 
 
-# This function is not critical for the main purpose
 def enumerate_paths(n, tau0, placements):
+    """
+    Enumerates and displays all possible investment paths from time 0 to n,
+    along with their corresponding total capital coefficients.
+
+    Parameters:
+    - n (int): total number of time periods
+    - tau0 (float): base interest rate per period (e.g. 0.009)
+    - placements (list of tuples): each tuple is (tau_k, d_k, f_k)
+    """
     from collections import defaultdict
 
-    # Create graph: each node maps to list of (next_node, rate)
+    # Step 1: Build the investment graph
     graph = defaultdict(list)
-    
-    # Add base arcs (t, t+1) with rate 1 + tau0
-    for t in range(n):
-        graph[t].append((t+1, 1 + tau0))
 
-    # Add placement arcs (dk, fk) with rate 1 + tauk
-    for tauk, dk, fk in placements:
-        graph[dk].append((fk, 1 + tauk))
+    # Add base transitions: (t, t+1) with base interest rate
+    for t in range(n):
+        graph[t].append((t + 1, 1 + tau0))
+
+    # Add specific investment arcs (d_k, f_k) with tau_k
+    for tau_k, d_k, f_k in placements:
+        graph[d_k].append((f_k, 1 + tau_k))
 
     all_paths = []
 
-    def backtrack(current, path, coef):
-        if current == n:
+    # Step 2: Recursively explore all valid paths from 0 to n
+    def explore_paths(t, path, coef):
+        if t == n:
             all_paths.append((path[:], coef))
             return
 
-        for next_node, rate in graph[current]:
-            if next_node <= n:
-                path.append((current, next_node))
-                backtrack(next_node, path, coef * rate)
+        for next_t, multiplier in graph[t]:
+            if next_t <= n:
+                path.append((t, next_t))
+                explore_paths(next_t, path, coef * multiplier)
                 path.pop()
 
-    backtrack(0, [], 1.0)
+    explore_paths(0, [], 1.0)
 
-    # Print all paths
+    # Step 3: Print all paths and their total coefficients
     for i, (path, coef) in enumerate(all_paths, 1):
         print(f"Path {i}: {path} -> Total Coefficient: {coef:.6f}")
+
 
 
